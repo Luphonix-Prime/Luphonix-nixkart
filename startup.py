@@ -3,9 +3,12 @@ import django
 import subprocess
 import sys
 
-def run_command(command):
+def run_command(command, *args):
     try:
-        subprocess.run([sys.executable, command], check=True)
+        cmd = [sys.executable, command]
+        if args:
+            cmd.extend(args)
+        subprocess.run(cmd, check=True)
         print(f"Successfully executed {command}")
     except subprocess.CalledProcessError as e:
         print(f"Error executing {command}: {e}")
