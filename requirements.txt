@@ -1,0 +1,11 @@
+Django
+django-environ
+django-allauth
+django-crispy-forms
+crispy-bootstrap4
+stripe
+gunicorn
+Pillow
+python-dotenv
+whitenoise
+django-cors-headers
