@@ -19,6 +19,10 @@ def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce_project.settings')
     django.setup()
 
+    # First, make migrations for all apps
+    print("Making migrations...")
+    run_command('manage.py', 'makemigrations')
+
     # Run migrations first
     print("Running migrations...")
     run_command('manage.py', 'migrate')
