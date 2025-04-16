@@ -5,9 +5,16 @@ import sys
 
 def run_command(command, *args):
     try:
-        cmd = [sys.executable, command]
+        # Get the absolute path of the script
+        script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), command)
+        
+        # Build the command list
+        cmd = [sys.executable]
         if args:
-            cmd.extend(args)
+            cmd.extend([script_path] + list(args))
+        else:
+            cmd.append(script_path)
+            
         subprocess.run(cmd, check=True)
         print(f"Successfully executed {command}")
     except subprocess.CalledProcessError as e:
