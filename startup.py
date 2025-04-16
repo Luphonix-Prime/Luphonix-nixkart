@@ -19,11 +19,15 @@ def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce_project.settings')
     django.setup()
 
-    # First, make migrations for all apps
-    print("Making migrations...")
+    # First, make migrations specifically for the store app
+    print("Making migrations for store app...")
+    run_command('manage.py', 'makemigrations', 'store')
+
+    # Then make migrations for any remaining apps
+    print("Making migrations for other apps...")
     run_command('manage.py', 'makemigrations')
 
-    # Run migrations first
+    # Run migrations
     print("Running migrations...")
     run_command('manage.py', 'migrate')
 
