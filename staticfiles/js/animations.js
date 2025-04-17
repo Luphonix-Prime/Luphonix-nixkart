@@ -31,10 +31,13 @@ function initializeCursorEffects() {
 
     const cursor = document.querySelector('.cursor-follower');
     
-    // Track mouse movement
+    // Track mouse movement with precise positioning
     document.addEventListener('mousemove', (e) => {
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
+        requestAnimationFrame(() => {
+            const x = e.clientX;
+            const y = e.clientY;
+            cursor.style.transform = `translate(${x}px, ${y}px)`;
+        });
     });
     
     // Add click effect
@@ -113,7 +116,7 @@ function initializeScrollAnimations() {
     
     // Initial check and scroll event listener
     handleScroll();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll); 
 }
 
 /**
