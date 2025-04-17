@@ -2,9 +2,9 @@
 
 :root {
     /* Primary Colors */
-    --primary-color: #fff; /* Purple accent from Railway */
-    --primary-dark: #fff;
-    --primary-light: #ffff;
+    --primary-color: #00c3ff; /* Purple accent from Railway */
+    --primary-dark: #00c3ff;
+    --primary-light: #00c3ff;
 
     /* Accent Colors */
     --accent-color: #00cfc8; /* Teal accent for contrast */
