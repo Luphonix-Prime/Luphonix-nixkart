@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from asyncio.events import BaseDefaultEventLoopPolicy
 import os
 import django
 
@@ -13,9 +14,9 @@ from django.utils import timezone
 # Create superuser
 try:
     admin_user = User.objects.create_superuser(
-        username='luphonix_prime_admin',
+        username='admin',
         email='Luphoni.prime@gmail.com',
-        password='keval_dhyey#2025',
+        password='admin',
         last_login=timezone.now(),
     )
     print("Superuser 'admin' created successfully.")

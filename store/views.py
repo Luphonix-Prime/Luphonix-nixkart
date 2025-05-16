@@ -26,6 +26,19 @@ class CustomLoginView(LoginView):
     template_name = 'store/login.html'
     redirect_authenticated_user = True
 
+    def get_success_url(self):
+        if self.request.user.is_superuser or self.request.user.is_staff:
+            return reverse('dashboard')
+        return reverse('home')
+
+def login_redirect(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser or request.user.is_staff:
+            return redirect('dashboard')  # Redirect to dashboard for admin/staff
+        else:
+            return redirect('home')  # Redirect to home for normal users
+    return redirect('login')  # Redirect to login if not authenticated
+
 # Dashboard view
 @login_required
 def dashboard(request):

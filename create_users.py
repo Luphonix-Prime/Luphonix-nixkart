@@ -28,9 +28,9 @@ def create_users():
     # Create a default user
     if not User.objects.filter(username='defaultuser').exists():
         User.objects.create_user(
-            username='defaultuser',
+            username='user',
             email='defaultuser@example.com',
-            password='defaultpassword'
+            password='pass'
         )
         print("Default user 'defaultuser' created successfully.")
     else:
