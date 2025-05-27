@@ -39,6 +39,19 @@ def login_redirect(request):
             return redirect('home')  # Redirect to home for normal users
     return redirect('login')  # Redirect to login if not authenticated
 
+def custom_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            if user.is_superuser or user.is_staff:
+                return redirect('dashboard')
+            else:
+                return redirect('home')
+    return render(request, 'store/login.html')
+
 # Dashboard view
 @login_required
 def dashboard(request):
@@ -258,7 +271,7 @@ def dashboard(request):
             'chart_data': chart_data
         })
     
-    return render(request, 'store/dashboard.html', context)
+    return render(request, 'store/Admin/dashboard.html', context)
 
 # Product views
 def product_list(request):
@@ -272,7 +285,7 @@ def product_list(request):
         'categories': categories,
     }
     
-    return render(request, 'store/product_list.html', context)
+    return render(request, 'store/Products/product_list.html', context)
 
 def product_detail(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
@@ -289,7 +302,7 @@ def product_detail(request, product_slug):
         'is_in_wishlist': is_in_wishlist
     }
     
-    return render(request, 'store/product_detail.html', context)
+    return render(request, 'store/Products/product_detail.html', context)
 
 @staff_member_required
 def add_product(request):
@@ -349,7 +362,7 @@ def add_product(request):
         return redirect('product_detail', product_slug=product.slug)
     
     categories = Category.objects.all()
-    return render(request, 'store/add_product.html', {'categories': categories})
+    return render(request, 'store/Products/add_product.html', {'categories': categories})
 
 @staff_member_required
 def edit_product(request, product_slug):
@@ -391,7 +404,7 @@ def edit_product(request, product_slug):
         return redirect('product_detail', product_slug=product.slug)
     
     categories = Category.objects.all()
-    return render(request, 'store/edit_product.html', {'product': product, 'categories': categories})
+    return render(request, 'store/Products/edit_product.html', {'product': product, 'categories': categories})
 
 @staff_member_required
 def delete_product(request, product_slug):
@@ -411,12 +424,12 @@ def delete_product(request, product_slug):
         # Redirect to the product list or category page
         return redirect('category_detail', category_slug=category.slug)
     
-    return render(request, 'store/delete_product.html', {'product': product})
+    return render(request, 'store/Products/delete_product.html', {'product': product})
 
 # Category views
 def category_list(request):
     categories = Category.objects.all()
-    return render(request, 'store/category_list.html', {'categories': categories})
+    return render(request, 'store/Products/Categories/category_list.html', {'categories': categories})
 
 def category_detail(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
@@ -427,7 +440,7 @@ def category_detail(request, category_slug):
         'products': products,
     }
     
-    return render(request, 'store/category_detail.html', context)
+    return render(request, 'store/Products/Categories/category_detail.html', context)
 
 @staff_member_required
 def add_category(request):
@@ -447,7 +460,7 @@ def add_category(request):
         
         return redirect('category_detail', category_slug=category.slug)
     
-    return render(request, 'store/add_category.html')
+    return render(request, 'store/Products/Categories/add_category.html')
 
 @staff_member_required
 def edit_category(request, category_slug):
@@ -464,7 +477,7 @@ def edit_category(request, category_slug):
         
         return redirect('category_detail', category_slug=category.slug)
     
-    return render(request, 'store/edit_category.html', {'category': category})
+    return render(request, 'store/Products/Categories/edit_category.html', {'category': category})
 
 @staff_member_required
 def delete_category(request, category_slug):
@@ -474,7 +487,7 @@ def delete_category(request, category_slug):
         category.delete()
         return redirect('categories')
     
-    return render(request, 'store/delete_category.html', {'category': category})
+    return render(request, 'store/Products/Categories/delete_category.html', {'category': category})
 
 # Cart views
 def get_or_create_cart(request):
@@ -538,7 +551,7 @@ def cart_view(request):
         'cart_items': cart_items,
     }
     
-    return render(request, 'store/cart.html', context)
+    return render(request, 'store/Products/Odering_System/cart/cart.html', context)
 
 @require_POST
 def update_cart(request, cart_item_id):
@@ -711,10 +724,10 @@ def checkout(request):
         'profile': profile,
     }
     
-    return render(request, 'store/checkout.html', context)
+    return render(request, 'store/Products/Odering_System/checkout.html', context)
 
 def order_success(request):
-    return render(request, 'store/order_success.html')
+    return render(request, 'store/Products/Odering_System/order_success.html')
 
 # User views
 def signup(request):
@@ -1008,7 +1021,7 @@ def report_page(request):
         'categories': categories,
     }
     
-    return render(request, 'store/report.html', context)
+    return render(request, 'store/Admin/Report/report_page.html', context)
 
 @staff_member_required
 def clear_report(request):
@@ -1066,7 +1079,7 @@ def home(request):
         'page_title': 'Home'
     }
     
-    return render(request, 'store/home.html', context)
+    return render(request, 'store/User/home.html', context)
 
 def add_product_to_category(request, category_slug):
     """Add a product directly to a specific category."""
@@ -1108,7 +1121,7 @@ def add_product_to_category(request, category_slug):
         
         return redirect('category_detail', category_slug=category.slug)
     
-    return render(request, 'store/add_product_to_category.html', {'category': category})
+    return render(request, 'store/Products/Categories/add_product_to_category.html', {'category': category})
 
 def category_products(request, category_slug):
     """View all products in a specific category."""
@@ -1121,7 +1134,7 @@ def category_products(request, category_slug):
         'page_title': f'{category.name} Products'
     }
     
-    return render(request, 'store/category_products.html', context)
+    return render(request, 'store/Products/Categories/category_products.html', context)
 
 def user_orders(request):
     """View all orders for the current user."""
@@ -1135,7 +1148,7 @@ def user_orders(request):
         'page_title': 'My Orders'
     }
     
-    return render(request, 'store/user_orders.html', context)
+    return render(request, 'store/Products/Odering_System/user_orders.html', context)
 
 def order_detail(request, order_id):
     """View details for a specific order."""
@@ -1153,7 +1166,7 @@ def order_detail(request, order_id):
         'page_title': f'Order #{order.id}'
     }
     
-    return render(request, 'store/order_detail.html', context)
+    return render(request, 'store/Products/Odering_System/order_detail.html', context)
 
 def wishlist_view(request):
     """View the current user's wishlist."""
@@ -1173,7 +1186,7 @@ def wishlist_view(request):
         'wishlist_items': wishlist_items
     }
     
-    return render(request, 'store/wishlist.html', context)
+    return render(request, 'store/Products/Odering_System/wishlist.html', context)
 
 def add_to_wishlist(request, product_id):
     """Add a product to the user's wishlist."""
@@ -1242,7 +1255,7 @@ def new_arrivals(request):
         'page_title': 'New Arrivals'
     }
     
-    return render(request, 'store/new_arrivals.html', context)
+    return render(request, 'store/Products/Features/new_arrivals.html', context)
 
 def featured_products(request):
     """View featured products."""
@@ -1253,7 +1266,7 @@ def featured_products(request):
         'page_title': 'Featured Products'
     }
     
-    return render(request, 'store/featured_products.html', context)
+    return render(request, 'store/Products/Features/featured_products.html', context)
 
 def best_sellers(request):
     """View best-selling products."""
@@ -1264,7 +1277,7 @@ def best_sellers(request):
         'page_title': 'Best Sellers'
     }
     
-    return render(request, 'store/best_sellers.html', context)
+    return render(request, 'store/Products/Features/best_sellers.html', context)
 
 def on_sale_products(request):
     """View products on sale."""
@@ -1275,7 +1288,7 @@ def on_sale_products(request):
         'page_title': 'Products on Sale'
     }
     
-    return render(request, 'store/on_sale_products.html', context)
+    return render(request, 'store/Products/Features/on_sale_products.html', context)
 
 def product_reviews(request, product_id):
     """View reviews for a specific product."""
@@ -1329,7 +1342,7 @@ def orders(request):
         'page_title': 'All Orders'
     }
     
-    return render(request, 'store/orders.html', context)
+    return render(request, 'store/Products/Odering_System/orders.html', context)
 
 def track_order(request):
     """Track an order by ID."""
@@ -1351,7 +1364,7 @@ def track_order(request):
         'page_title': 'Track Order'
     }
     
-    return render(request, 'store/track_order.html', context)
+    return render(request, 'store/Products/Odering_System/track_order.html', context)
 
 def shipping_view(request):
     """View shipping information."""
@@ -1449,7 +1462,7 @@ def ticket_detail(request, ticket_id):
 # Static Pages
 def about(request):
     """About page."""
-    return render(request, 'store/about.html', {'page_title': 'About Us'})
+    return render(request, 'store/User/About us/about.html', {'page_title': 'About Us'})
 
 def contact(request):
     """Contact page."""
@@ -1463,7 +1476,7 @@ def contact(request):
             messages.success(request, 'Your message has been sent!')
             return redirect('contact')
     
-    return render(request, 'store/contact.html', {'page_title': 'Contact Us'})
+    return render(request, 'store/User/Contact us/contact.html', {'page_title': 'Contact Us'})
 
 def faq(request):
     """FAQ page."""

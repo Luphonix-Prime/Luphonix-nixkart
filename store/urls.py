@@ -16,7 +16,7 @@ from django.contrib.auth.views import (
 
 urlpatterns = [
     # Home/Dashboard
-    path('', views.dashboard, name='index'),  # Landing page is now the dashboard
+     path('', views.dashboard, name='index'),  # Landing page is now the dashboard
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/clear-report/', views.clear_report, name='clear_report'),
     path('home/', views.home, name='home'),
@@ -29,8 +29,9 @@ urlpatterns = [
     path('product/delete/<slug:product_slug>/', views.delete_product, name='delete_product'),
     path('new-arrivals/', views.new_arrivals, name='new_arrivals'),
     path('featured/', views.featured_products, name='featured'),
-    path('best-sellers/', views.best_sellers, name='best_sellers'),
     path('on-sale/', views.on_sale_products, name='on_sale_products'),
+    path('best-sellers/', views.best_sellers, name='best_sellers'),
+    
     
     # Categories
     path('categories/', views.category_list, name='categories'),
@@ -68,7 +69,8 @@ urlpatterns = [
     path('returns/', views.returns_view, name='returns'),
     
     # Authentication
-    path('login/', CustomLoginView.as_view(), name='login'),
+    path('login/', views.custom_login, name='login'),
+    path('', views.login_redirect, name='login_redirect'),
     path('logout/', views.logout_view, name='logout'),
     path('signup/', views.signup, name='signup'),
     path('socialaccount/login/<str:provider>/', views.social_account_login, name='socialaccount_login'),

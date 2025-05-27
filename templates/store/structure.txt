@@ -1,0 +1,76 @@
+|   address_list.html
+|   add_address.html
+|   add_category.html
+|   add_product_to_category.html
+|   cart.html
+|   categories.html
+|   category_detail.html
+|   category_list.html
+|   change_email.html
+|   checkout.html
+|   coupons.html
+|   delete_category.html
+|   edit_address.html
+|   edit_category.html
+|   edit_profile.html
+|   fake_products_page.html
+|   faq.html
+|   login.html
+|   newsletter_signup.html
+|   notifications.html
+|   orders.html
+|   order_detail.html
+|   order_success.html
+|   password_change.html
+|   password_change_done.html
+|   password_reset.html
+|   password_reset_complete.html
+|   password_reset_confirm.html
+|   password_reset_done.html
+|   privacy_policy.html
+|   product_reviews.html
+|   profile.html
+|   returns.html
+|   search_results.html
+|   shipping.html
+|   signup.html
+|   structure.txt
+|   submit_ticket.html
+|   support.html
+|   terms_and_conditions.html
+|   track_order.html
+|   user_orders.html
+|   wishlist.html
+|   
++---Admin
+|   |   dashboard.html
+|   |   
+|   \---Report
+|           report_page.html
+|           
++---Details
++---Fake_Products
++---Odering_System
++---Products
+|   |   add_product.html
+|   |   delete_product.html
+|   |   edit_product.html
+|   |   product_detail.html
+|   |   product_list.html
+|   |   
+|   \---Features
+|           best_sellers.html
+|           featured_products.html
+|           new_arrivals.html
+|           on_sale_products.html
+|           
++---Profile
+\---User
+    |   home.html
+    |   
+    +---About us
+    |       about.html
+    |       
+    \---Contact us
+            contact.html
+            
